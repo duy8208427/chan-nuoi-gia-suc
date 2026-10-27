@@ -1,0 +1,62 @@
+{
+  "pig-nursery": {
+    "ATEMP": { "ref_min": 26, "ref_max": 30 },
+    "RH": { "ref_min": 60, "ref_max": 80 },
+    "THI": { "ref_min": null, "ref_max": 78 },
+    "NH3": { "ref_min": null, "ref_max": 20 },
+    "CO2": { "ref_min": null, "ref_max": 3000 },
+    "H2S": { "ref_min": null, "ref_max": 5 },
+    "AIR": { "ref_min": 0.1, "ref_max": 0.4 },
+    "WCON": { "ref_min": 1, "ref_max": 4 },
+    "WTEMP": { "ref_min": 15, "ref_max": 25 },
+    "FEED": { "ref_min": 0.2, "ref_max": 1.2 }
+  },
+  "pig-grower": {
+    "ATEMP": { "ref_min": 18, "ref_max": 22 },
+    "RH": { "ref_min": 60, "ref_max": 80 },
+    "THI": { "ref_min": null, "ref_max": 78 },
+    "NH3": { "ref_min": null, "ref_max": 20 },
+    "CO2": { "ref_min": null, "ref_max": 3000 },
+    "H2S": { "ref_min": null, "ref_max": 5 },
+    "AIR": { "ref_min": 0.2, "ref_max": 0.8 },
+    "WCON": { "ref_min": 8, "ref_max": 15 },
+    "WTEMP": { "ref_min": 10, "ref_max": 20 },
+    "FEED": { "ref_min": 1.8, "ref_max": 3.2 }
+  },
+  "pig-sow": {
+    "ATEMP": { "ref_min": 18, "ref_max": 22 },
+    "RH": { "ref_min": 60, "ref_max": 80 },
+    "THI": { "ref_min": null, "ref_max": 78 },
+    "NH3": { "ref_min": null, "ref_max": 20 },
+    "CO2": { "ref_min": null, "ref_max": 3000 },
+    "H2S": { "ref_min": null, "ref_max": 5 },
+    "AIR": { "ref_min": 0.2, "ref_max": 0.6 },
+    "WCON": { "ref_min": 15, "ref_max": 40 },
+    "WTEMP": { "ref_min": 10, "ref_max": 20 },
+    "FEED": { "ref_min": 4, "ref_max": 8 }
+  },
+  "dairy": {
+    "ATEMP": { "ref_min": 5, "ref_max": 25 },
+    "RH": { "ref_min": 40, "ref_max": 80 },
+    "THI": { "ref_min": null, "ref_max": 72 },
+    "NH3": { "ref_min": null, "ref_max": 20 },
+    "CO2": { "ref_min": null, "ref_max": 3000 },
+    "H2S": { "ref_min": null, "ref_max": 5 },
+    "AIR": { "ref_min": 0.5, "ref_max": 2.5 },
+    "WCON": { "ref_min": 80, "ref_max": 150 },
+    "WTEMP": { "ref_min": 10, "ref_max": 20 },
+    "FEED": { "ref_min": 14, "ref_max": 28 }
+  },
+  "beef": {
+    "ATEMP": { "ref_min": 5, "ref_max": 25 },
+    "RH": { "ref_min": 40, "ref_max": 80 },
+    "THI": { "ref_min": null, "ref_max": 78 },
+    "NH3": { "ref_min": null, "ref_max": 20 },
+    "CO2": { "ref_min": null, "ref_max": 3000 },
+    "H2S": { "ref_min": null, "ref_max": 5 },
+    "AIR": { "ref_min": 0.5, "ref_max": 2.5 },
+    "WCON": { "ref_min": 30, "ref_max": 70 },
+    "WTEMP": { "ref_min": 10, "ref_max": 20 },
+    "FEED": { "ref_min": 8, "ref_max": 18 }
+  }
+}

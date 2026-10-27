@@ -1,0 +1,82 @@
+[
+  {
+    "param_code": "ATEMP",
+    "param_name": "Nhiệt độ không khí",
+    "unit": "°C",
+    "ref_min": null,
+    "ref_max": null,
+    "description": "Nhiệt chuồng. Heo úm cần ấm, heo thịt và bò quá nóng sẽ bỏ ăn."
+  },
+  {
+    "param_code": "RH",
+    "param_name": "Độ ẩm tương đối",
+    "unit": "%",
+    "ref_min": null,
+    "ref_max": null,
+    "description": "Ẩm cao làm đệm lót ướt và tăng stress nhiệt."
+  },
+  {
+    "param_code": "THI",
+    "param_name": "Chỉ số nhiệt–ẩm (THI)",
+    "unit": "—",
+    "ref_min": null,
+    "ref_max": null,
+    "description": "Tính từ nhiệt và ẩm. Bò sữa stress khi THI từ 72, nặng từ 80."
+  },
+  {
+    "param_code": "NH3",
+    "param_name": "Amoniac không khí",
+    "unit": "ppm",
+    "ref_min": null,
+    "ref_max": null,
+    "description": "Khí từ phân. Cao gây kích ứng mắt và đường hô hấp."
+  },
+  {
+    "param_code": "CO2",
+    "param_name": "CO₂",
+    "unit": "ppm",
+    "ref_min": null,
+    "ref_max": null,
+    "description": "Chỉ báo thông gió. Chuồng kín, quạt yếu thì CO₂ tăng."
+  },
+  {
+    "param_code": "H2S",
+    "param_name": "H₂S hầm phân",
+    "unit": "ppm",
+    "ref_min": null,
+    "ref_max": null,
+    "description": "Độc khi khuấy hầm phân. Báo động từ 5 ppm."
+  },
+  {
+    "param_code": "AIR",
+    "param_name": "Tốc độ gió",
+    "unit": "m/s",
+    "ref_min": null,
+    "ref_max": null,
+    "description": "Gió quá yếu là quạt hỏng, quá mạnh gây lùa heo con."
+  },
+  {
+    "param_code": "WCON",
+    "param_name": "Nước uống",
+    "unit": "L/con/ngày",
+    "ref_min": null,
+    "ref_max": null,
+    "description": "Uống giảm đột ngột thường đi cùng bỏ ăn hoặc núm uống tắc."
+  },
+  {
+    "param_code": "WTEMP",
+    "param_name": "Nhiệt độ nước uống",
+    "unit": "°C",
+    "ref_min": null,
+    "ref_max": null,
+    "description": "Nước quá nóng buổi trưa làm giảm lượng uống."
+  },
+  {
+    "param_code": "FEED",
+    "param_name": "Thức ăn ăn vào",
+    "unit": "kg/con/ngày",
+    "ref_min": null,
+    "ref_max": null,
+    "description": "Khẩu phần thực tế. Thấp hơn ngưỡng là đàn đang bỏ ăn."
+  }
+]
