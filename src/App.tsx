@@ -68,6 +68,7 @@ export default function App() {
   const [province, setProvince] = useState("");
   const [farmFilter, setFarmFilter] = useState("");
   const [cameraView, setCameraView] = useState<{ pondId: string; cameraId: string; scope: "pen" | "farm" } | null>(null);
+  const [farmSceneId, setFarmSceneId] = useState<string | null>(null);
   const hideHover = useRef(0);
 
   const openCatalog = useCallback(async () => {
@@ -117,6 +118,7 @@ export default function App() {
     setReady(false);
     setError("");
     setDashStack([]);
+    setFarmSceneId(null);
   }, []);
 
   useEffect(() => {
@@ -310,7 +312,22 @@ export default function App() {
   }, []);
 
   const selectPond = useCallback((pondId: string) => selectOnMap({ kind: "pond", id: pondId }), [selectOnMap]);
-  const selectFarm = useCallback((farmId: string) => selectOnMap({ kind: "farm", id: farmId }), [selectOnMap]);
+  const enterFarm = useCallback(
+    (farmId: string) => {
+      setFarmSceneId(farmId);
+      applySelection(null);
+      setDetailDock(null);
+      setHover(null);
+    },
+    [applySelection],
+  );
+  const leaveFarm = useCallback(() => {
+    setFarmSceneId(null);
+    applySelection(null);
+    setDetailDock(null);
+    setHover(null);
+  }, [applySelection]);
+  const selectFarm = enterFarm;
   const selectVehicle = useCallback((vehicleId: string) => selectOnMap({ kind: "vehicle", id: vehicleId }), [selectOnMap]);
   const selectPlant = useCallback((plantId: string) => selectOnMap({ kind: "plant", id: plantId }), [selectOnMap]);
 
@@ -402,6 +419,10 @@ export default function App() {
         setDetailDock(null);
         return;
       }
+      if (farmSceneId) {
+        leaveFarm();
+        return;
+      }
       if (infoTopic && !infoCollapsed) {
         setInfoCollapsed(true);
         return;
@@ -429,6 +450,8 @@ export default function App() {
     selectedFarmId,
     infoTopic,
     infoCollapsed,
+    farmSceneId,
+    leaveFarm,
   ]);
 
   const sessionLabel =
@@ -451,6 +474,11 @@ export default function App() {
   const onSearchEnter = () => {
     if (filtered[0]) selectPond(filtered[0].pond.id);
   };
+  const sceneFarm = farmSceneId ? (farms.find((farm) => farm.id === farmSceneId) ?? null) : null;
+  const mapPins = sceneFarm ? sceneFarm.pins : filtered;
+  const mapLayers: MapLayers = sceneFarm
+    ? { ponds: true, farms: false, routes: false, plants: false }
+    : layers;
 
   return (
     <div className="app">
@@ -523,7 +551,7 @@ export default function App() {
             selectedFarmId={selectedFarmId}
             selectedVehicleId={selectedVehicleId}
             selectedPlantId={selectedPlantId}
-            onSelectFarm={(farmId) => pushDash({ kind: "farm", id: farmId })}
+            onSelectFarm={enterFarm}
             onSelectVehicle={(vehicleId) => pushDash({ kind: "vehicle", id: vehicleId })}
             onSelectPlant={(plantId) => pushDash({ kind: "plant", id: plantId })}
             embedded
@@ -531,34 +559,55 @@ export default function App() {
         ) : null}
       </DashboardPane>
 
-      <div className="map-stage">
-        <div className="brand map-brand">
-          <span className="brand-mark" aria-hidden="true">
-            <img src="/vsg-logo.png?v=2" alt="" />
-          </span>
-          <div>
-            <strong>Chăn nuôi gia súc</strong>
-            <span>
-              {catalog.region.name} · {ROLE_LABEL[role]}
+      <div className={`map-stage${sceneFarm ? " farm-scene" : ""}`}>
+        <div className="map-top">
+          <div className="brand map-brand">
+            <span className="brand-mark" aria-hidden="true">
+              <img src="/vsg-logo.png?v=2" alt="" />
+            </span>
+            <div>
+              <strong>Chăn nuôi gia súc</strong>
+              <span>
+                {catalog.region.name} · {ROLE_LABEL[role]}
+              </span>
+            </div>
+          </div>
+          <AlertBell
+            items={warnings}
+            onOpen={(item) => {
+              if (item.kind === "trip" && item.vehicle_id) {
+                setFarmSceneId(null);
+                selectOnMap({ kind: "vehicle", id: item.vehicle_id });
+                return;
+              }
+              if (!item.pond_id) return;
+              const pin = scopedPins.find((entry) => entry.pond.id === item.pond_id);
+              setFarmSceneId(pin?.farm_id ?? null);
+              selectOnMap({ kind: "pond", id: item.pond_id });
+            }}
+          />
+        </div>
+        {sceneFarm ? (
+          <div className="farm-scene-bar">
+            <button type="button" className="farm-back" onClick={leaveFarm}>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" d="M14 6 8 12l6 6" />
+              </svg>
+              Màn hình chính
+            </button>
+            <span className="farm-scene-name">
+              <b>{sceneFarm.name}</b>
+              <small>{sceneFarm.pins.length} chuồng</small>
             </span>
           </div>
-        </div>
-        <AlertBell
-          items={warnings}
-          onOpen={(item) => {
-            if (item.kind === "trip" && item.vehicle_id) {
-              selectOnMap({ kind: "vehicle", id: item.vehicle_id });
-              return;
-            }
-            if (item.pond_id) selectOnMap({ kind: "pond", id: item.pond_id });
-          }}
-        />
+        ) : null}
         <PondMap
-          pins={filtered}
-          farms={farms}
-          plants={role === "admin" ? catalog.plants : []}
-          vehicles={vehicles}
-          layers={layers}
+          pins={mapPins}
+          farms={sceneFarm ? [] : farms}
+          plants={sceneFarm || role !== "admin" ? [] : catalog.plants}
+          vehicles={sceneFarm ? [] : vehicles}
+          layers={mapLayers}
+          farmSceneId={sceneFarm?.id ?? null}
           selectedId={selectedId}
           selectedFarmId={selectedFarmId}
           selectedVehicleId={selectedVehicleId}
@@ -592,7 +641,7 @@ export default function App() {
             showLayers={role === "admin"}
           />
         )}
-        {detailDock === "map" ? null : (
+        {detailDock === "map" || sceneFarm ? null : (
           <MobileSheet
             role={role}
             pins={scopedPins}
@@ -722,7 +771,7 @@ export default function App() {
                   selectedFarmId={selectedFarmId}
                   selectedVehicleId={selectedVehicleId}
                   selectedPlantId={selectedPlantId}
-                  onSelectFarm={(farmId) => pushInfo({ kind: "farm", id: farmId })}
+                  onSelectFarm={enterFarm}
                   onSelectVehicle={(vehicleId) => pushInfo({ kind: "vehicle", id: vehicleId })}
                   onSelectPlant={(plantId) => pushInfo({ kind: "plant", id: plantId })}
                   embedded

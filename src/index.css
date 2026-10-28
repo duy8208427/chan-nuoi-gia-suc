@@ -135,12 +135,12 @@ select {
 
 .dashboard-pane {
   position: relative;
-  flex: 0 0 25%;
+  flex: 0 0 20%;
   z-index: 5;
   display: flex;
   flex-direction: row;
-  min-width: 240px;
-  max-width: 380px;
+  min-width: 192px;
+  max-width: 304px;
   overflow: visible;
   background: #f7f8fb;
   border-right: 1px solid #e8edf2;
@@ -225,10 +225,9 @@ select {
 }
 
 .alert-bell {
-  position: absolute;
-  z-index: 9;
-  top: 14px;
-  right: 14px;
+  position: relative;
+  z-index: 2;
+  flex: 0 0 auto;
 }
 
 .alert-bell-btn {
@@ -276,7 +275,7 @@ select {
 .alert-bell-drop {
   position: absolute;
   top: calc(100% + 8px);
-  right: 0;
+  left: 0;
   width: min(320px, calc(100vw - 28px));
   max-height: min(420px, calc(100vh - 80px));
   overflow: auto;
@@ -558,11 +557,19 @@ select {
   min-width: 0;
 }
 
-.map-brand {
+.map-top {
   position: absolute;
-  z-index: 4;
+  z-index: 9;
   top: 14px;
   left: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.map-brand {
+  position: relative;
+  z-index: 1;
 }
 
 .filter-fab {
@@ -692,12 +699,12 @@ select {
 
 .info-panel {
   position: relative;
-  flex: 0 0 320px;
+  flex: 0 0 256px;
   z-index: 5;
   display: flex;
   flex-direction: column;
-  min-width: 280px;
-  max-width: 360px;
+  min-width: 224px;
+  max-width: 288px;
   background: #fff;
   border-left: 1px solid #e8edf2;
 }
@@ -1342,14 +1349,14 @@ select {
 .detail-panel {
   position: absolute;
   z-index: 5;
-  top: 72px;
+  top: 0;
   right: 14px;
   bottom: 14px;
-  width: min(430px, calc(100% - 28px));
+  width: min(344px, calc(100% - 28px));
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  border-radius: 22px;
+  border-radius: 0 0 22px 22px;
   background: rgba(255, 255, 255, 0.86);
   backdrop-filter: blur(22px) saturate(1.2);
   box-shadow: 0 22px 60px rgba(15, 23, 42, 0.22);
@@ -1992,6 +1999,67 @@ select,
   top: 78px;
 }
 
+.farm-scene-bar {
+  position: absolute;
+  z-index: 9;
+  top: 76px;
+  left: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.farm-back {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 40px;
+  margin: 0;
+  padding: 0 14px 0 8px;
+  border: 0;
+  border-radius: 999px;
+  background: #fff;
+  color: #1e1b4b;
+  font-weight: 700;
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.16);
+  cursor: pointer;
+}
+
+.farm-back svg {
+  width: 18px;
+  height: 18px;
+}
+
+.farm-scene-name {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 40px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.16);
+}
+
+.farm-scene-name b {
+  font-size: 13px;
+  line-height: 1.15;
+}
+
+.farm-scene-name small {
+  color: #64748b;
+  font-size: 11px;
+}
+
+.map-stage.farm-scene .maplibregl-ctrl-top-left {
+  top: 128px;
+}
+
+.map-stage.farm-scene .filter-fab,
+.map-stage.farm-scene .minimap {
+  display: none;
+}
+
 .maplibregl-ctrl-bottom-left {
   left: 14px;
   bottom: 14px;
@@ -2028,7 +2096,7 @@ select,
 }
 
 .minimap.with-panel {
-  right: 448px;
+  right: 362px;
 }
 
 .minimap-map {
@@ -3315,11 +3383,11 @@ select,
 }
 
 .map-stage:has(.detail-panel) .maplibregl-ctrl-bottom-right {
-  right: 448px;
+  right: 362px;
 }
 
 .map-stage:has(.detail-panel) .filter-fab {
-  right: 448px;
+  right: 362px;
 }
 
 .layer-bar {
@@ -3517,8 +3585,8 @@ select,
 
 @media (max-width: 1100px) {
   .dashboard-pane {
-    flex-basis: 25%;
-    min-width: 220px;
+    flex-basis: 20%;
+    min-width: 176px;
   }
   .dash-entry b {
     font-size: 32px;
@@ -3536,6 +3604,7 @@ select,
   .detail-panel {
     top: auto;
     height: 58%;
+    border-radius: 22px;
   }
   .map-stage:has(.detail-panel) .filter-fab {
     right: 14px;
